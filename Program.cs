@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.VisualBasic;
 using Utils;
 class Program
 {
@@ -26,7 +27,7 @@ class Program
         string player = states[(int)States.FINE];
 
         // Index of the current food
-        int food = (int)States.FINE;
+        int food = (int)States.DEAD;
 
         CheckFlags flagsChecker = new CheckFlags(args);
 
@@ -98,6 +99,12 @@ class Program
                 TerminateProgram("Console was resized. Program exiting.");
                 return;
             }
+
+            if (ShouldFreezPlayerMovement())
+            {
+                FreezePlayer();
+            }
+
             if (Console.KeyAvailable)
             {
 
@@ -169,6 +176,11 @@ class Program
             {
                 return false;
             }
+        }
+
+        bool ShouldFreezPlayerMovement()
+        {
+            return player == states[(int)States.DEAD];
         }
 
         void TerminateProgram(string message)
