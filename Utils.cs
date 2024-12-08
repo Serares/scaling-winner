@@ -2,6 +2,12 @@ using Microsoft.VisualBasic;
 
 namespace Utils
 {
+    enum States
+    {
+        FINE,
+        HAPPY,
+        DEAD,
+    };
     public class CheckFlags
     {
         private bool shouldTerminateOnNonDirectionalKeys = false;

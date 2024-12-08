@@ -4,7 +4,6 @@ class Program
 {
     static void Main(string[] args)
     {
-
         Random random = new Random();
         Console.CursorVisible = false;
         int height = Console.WindowHeight - 1;
@@ -24,10 +23,10 @@ class Program
         string[] foods = { "@@@@@", "$$$$$", "#####" };
 
         // Current player string displayed in the Console
-        string player = states[0];
+        string player = states[(int)States.FINE];
 
         // Index of the current food
-        int food = 0;
+        int food = (int)States.FINE;
 
         CheckFlags flagsChecker = new CheckFlags(args);
 
@@ -142,6 +141,13 @@ class Program
                 playerX = (playerX < 0) ? 0 : (playerX >= width ? width : playerX);
                 playerY = (playerY < 0) ? 0 : (playerY >= height ? height : playerY);
 
+                // Recalculate player state and food state
+                if (RecalculateFoodAndPlayerStates())
+                {
+                    ChangePlayer();
+                    ShowFood();
+                };
+
                 // Draw the player at the new location
                 Console.SetCursorPosition(playerX, playerY);
                 Console.Write(player);
@@ -149,6 +155,19 @@ class Program
             else
             {
                 Thread.Sleep(100);
+            }
+        }
+
+        // returns the recalculated state    
+        bool RecalculateFoodAndPlayerStates()
+        {
+            if (playerX == foodX && playerY == foodY)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
